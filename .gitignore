@@ -1,0 +1,9 @@
+*.a
+*.d
+*.o
+*.sw?
+brace-expansion-bin
+brace-expansion-unit-tests
+tags
+notes
+*.pdf

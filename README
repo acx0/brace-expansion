@@ -1,0 +1,35 @@
+Implementation details:
+    Unlike Bash's brace expansion feature, this implementation differs as follows:
+        * literals are restricted to the set [a-zA-Z]
+        * a single literal string enclosed within braces is treated as a literal:
+            e.g.: `{ABC}` == `ABC`
+          whereas Bash parses the enclosing braces as part of the literal
+        * an empty brace-enclosed list is not allowed:
+            e.g.: `{}`
+        * an empty item within a brace-enclosed list is not allowed:
+            e.g.: `{A,,C}`
+        * redundant nesting braces are allowed and ignored:
+            e.g.: `{{{A,B}}}` == `{A,B}`
+
+    This implementation performs brace expansion by constructing a parse tree of the
+    expression based on the grammar defined in parser.h, and then applies the
+    expansion algorithm (i.e. cartesian product) recursively to adjacent nodes in
+    the parse tree.
+
+Dependencies:
+    bash
+    docker
+
+Running the code:
+    Install docker on the system and start the containerized build environment:
+
+        $ ./start-build-env.sh
+
+    Once the build environment is initialized, compile and run all tests using:
+
+        $ ./run-all-tests.sh
+
+    To test the binary manually, do:
+
+        $ ./build.sh
+        $ echo "A{B,C}" | ./brace-expansion-bin
